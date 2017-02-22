@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/server/app.js",
-
-    "server:dev": "webpack-dev-server --config config/webpack.dev.js --open --progress --profile --watch --content-base src/client/"
+    "start": "node ./src/server/app.js"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
