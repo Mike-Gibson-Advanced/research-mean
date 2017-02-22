@@ -1,7 +1,11 @@
 import {
   Component,
-  OnInit
+  OnInit,
 } from '@angular/core';
+
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
@@ -21,20 +25,62 @@ import { XLargeDirective } from './x-large';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  // Set our default values
-  public localState = { value: '' };
-  // TypeScript public modifiers
+
+  public items: IItem[] = [];
+  public newItem: {name: string} = { name: '...'};
+
   constructor(
-    public title: Title
+    public title: Title,
+    private http: Http
   ) {}
 
   public ngOnInit() {
-    console.log('hello `Home` component');
-    // this.title.getData().subscribe(data => this.data = data);
+    this.getData()
+      .subscribe(
+        (items) => this.items = items,
+        (e) => alert('error - ' + e));
   }
 
-  public submitState(value: string) {
-    console.log('submitState', value);
-    this.localState.value = '';
+  public delete(item: IItem) {
+    this.deleteData(item)
+      .subscribe(
+        () => {
+          const index = this.items.indexOf(item);
+          if (index > -1) {
+            this.items.splice(index, 1);
+          }
+        },
+        (e) => alert('error - ' + e));
   }
+
+  public saveItem() {
+    this.postData(this.newItem)
+      .subscribe(
+        (item) => this.items.push(item),
+        (e) => alert('error - ' + e));
+  }
+
+  public getData(): Observable<any[]> {
+    return this.http
+      .get('api/data')
+      .map((res: Response) => res.json());
+  }
+
+  public postData(item: { name: string }): Observable<IItem> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post('/api/data', item, options)
+      .map((res: Response) => res.json());
+  }
+
+  public deleteData(item: IItem): Observable<any> {
+    return this.http.delete('/api/data/' + item.id);
+  }
+}
+
+interface IItem {
+  id: number;
+  name: string;
 }

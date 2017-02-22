@@ -15,6 +15,14 @@ const port = isDeveloping ? 3000 : process.env.PORT;
 
 var app = express();
 
+app.use(logger('dev'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+var api = require('./routes/api');
+app.use('/api', api);
+
 if (isDeveloping) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
