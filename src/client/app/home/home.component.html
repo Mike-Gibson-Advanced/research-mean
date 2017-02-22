@@ -13,14 +13,12 @@
   <hr>
 
   <div>
+    <h3>Add New...</h3>
 
     <form (ngSubmit)="saveItem()" autocomplete="off">
-
-      <input type="text" [(ngModel)]="newItem.name" name="name">
-
+      <input type="text" [(ngModel)]="newItem.name" name="name" placeholder="name">
       <button>Save</button>
     </form>
   </div>
-
 
 </div>

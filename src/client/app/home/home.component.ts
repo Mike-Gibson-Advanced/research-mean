@@ -27,7 +27,7 @@ import { XLargeDirective } from './x-large';
 export class HomeComponent implements OnInit {
 
   public items: IItem[] = [];
-  public newItem: {name: string} = { name: '...'};
+  public newItem: {name: string} = { name: ''};
 
   constructor(
     public title: Title,

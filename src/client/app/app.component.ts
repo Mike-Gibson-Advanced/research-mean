@@ -19,10 +19,6 @@ import {
   ],
   template: `
     <nav>
-      <a [routerLink]=" ['./'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Index
-      </a>
       <a [routerLink]=" ['./home'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Home
@@ -36,10 +32,6 @@ import {
     <main>
       <router-outlet></router-outlet>
     </main>
-
-    <footer>
-      <span>Footer</span>
-    </footer>
   `
 })
 export class AppComponent implements OnInit {
