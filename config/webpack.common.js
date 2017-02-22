@@ -252,8 +252,7 @@ module.exports = function (options) {
        * See: https://www.npmjs.com/package/copy-webpack-plugin
        */
       new CopyWebpackPlugin([
-        { from: 'src/client/assets', to: 'assets' },
-        { from: 'src/client/meta'}
+        { from: 'src/client/assets', to: 'assets' }
       ]),
 
 
@@ -306,9 +305,9 @@ module.exports = function (options) {
        *
        * Dependencies: HtmlWebpackPlugin
        */
-      new HtmlElementsPlugin({
-        headTags: require('./head-config.common')
-      }),
+      // new HtmlElementsPlugin({
+      //   headTags: require('./head-config.common')
+      // }),
 
       /**
        * Plugin LoaderOptionsPlugin (experimental)
