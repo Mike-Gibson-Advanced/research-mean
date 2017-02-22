@@ -44,10 +44,6 @@ import {
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    
-  ) {}
-
   public ngOnInit() {
     console.log('init');
   }
