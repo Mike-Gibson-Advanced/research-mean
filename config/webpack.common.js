@@ -20,7 +20,6 @@ const ngcWebpack = require('ngc-webpack');
 /*
  * Webpack Constants
  */
-const HMR = helpers.hasProcessFlag('hot');
 const AOT = helpers.hasNpmFlag('aot');
 const METADATA = {
   title: 'MEAN Testing',
@@ -34,7 +33,6 @@ const METADATA = {
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
 module.exports = function (options) {
-  isProd = options.env === 'production';
   return {
 
     /*
@@ -54,9 +52,9 @@ module.exports = function (options) {
      */
     entry: {
 
-      'polyfills': './src/polyfills.browser.ts',
-      'main':      AOT ? './src/main.browser.aot.ts' :
-                  './src/main.browser.ts'
+      'polyfills': './src/client/polyfills.browser.ts',
+      'main':      AOT ? './src/client/main.browser.aot.ts' :
+                  './src/client/main.browser.ts'
 
     },
 
@@ -104,13 +102,6 @@ module.exports = function (options) {
         {
           test: /\.ts$/,
           use: [
-            {
-              loader: '@angularclass/hmr-loader',
-              options: {
-                pretty: !isProd,
-                prod: isProd
-              }
-            },
             { // MAKE SURE TO CHAIN VANILLA JS CODE, I.E. TS COMPILATION OUTPUT.
               loader: 'ng-router-loader',
               options: {
@@ -172,7 +163,7 @@ module.exports = function (options) {
         {
           test: /\.html$/,
           use: 'raw-loader',
-          exclude: [helpers.root('src/index.html')]
+          exclude: [helpers.root('src/client/index.html')]
         },
 
         /* 
@@ -261,8 +252,8 @@ module.exports = function (options) {
        * See: https://www.npmjs.com/package/copy-webpack-plugin
        */
       new CopyWebpackPlugin([
-        { from: 'src/assets', to: 'assets' },
-        { from: 'src/meta'}
+        { from: 'src/client/assets', to: 'assets' },
+        { from: 'src/client/meta'}
       ]),
 
 
@@ -275,7 +266,7 @@ module.exports = function (options) {
        * See: https://github.com/ampedandwired/html-webpack-plugin
        */
       new HtmlWebpackPlugin({
-        template: 'src/index.html',
+        template: 'src/client/index.html',
         title: METADATA.title,
         chunksSortMode: 'dependency',
         metadata: METADATA,
